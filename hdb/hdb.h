@@ -2,17 +2,23 @@
 #define HDB_H
 
 #include <stdbool.h>
+#include <dirent.h>
+#include <unistd.h>
+#include <hiredis/hiredis.h>
 
 // Connection to the Hooli database
 typedef void* hdb_connection;
 
-// A record stored in the Hooli database
-typedef struct hdb_record {
-  char* username;
-  char* filename;
-  char* checksum;
-  struct hdb_record* next;
-} hdb_record;
+//typdef for record 
+
+typedef struct hdb_record{
+
+char *username;
+char *filename;
+char *checksum;
+struct hdb_record nex;t
+
+}hdb_record
 
 // Connect to the specified Hooli database server, returning the initialized
 // connection.
