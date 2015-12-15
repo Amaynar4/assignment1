@@ -106,7 +106,7 @@ int main(int argc, char** argv)
 
 	
 
-	char* auth = hdb_authentication(connection, username, password);
+	char* auth = hdb_authenticate(connection, username, password);
 	
 	if (auth == NULL)
 	{
@@ -126,12 +126,42 @@ int main(int argc, char** argv)
 	syslog(LOG_ERR,"no server files");
 	}
 
-	while(list != NULL){
+	int sequenceNum = 0; 
 
-	  //stuff
+	hmdp_request* hmdp_req =  hmdp_create_auth_request(username, password);
 
-	  list = list->next;//iterate
+	hdb_record* files = hdb_user_files(connection, username);
 
-	}
+	typedef struct {
+	int length;
+	uint8_t buffer[UDP_MSS];
+	} message;
 
+	while (files != null){
+
+		//create new message of type 1 to send to hfs with next seqnum
+		message* msg = create_message();				
+		//append  chunck of files to msg 		
+
+		//invalid auth token gives an error
+		if (connection == null){
+			syslog(LOG_ERR, "connection lost");
+			exit(EXIT_FAILURE);
+		}
+		//else send a data message containing file chunks
+		else{
+			
+ 		}
+
+		//and wait for each  ACK
+
+		//move to next file in struct
+		files = files->next;
+
+	}//do for each file needed to be transferred		
+
+}
+
+message* create_message(){
+ return (message*)malloc(sizeof(message));
 }
